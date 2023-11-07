@@ -38,7 +38,7 @@ namespace Blood_Bank.Controllers
             var dona2 = donations.Find(d => d.idDonation == id);
             dona2.idDonation=dona.idDonation;
             dona2.idDonor=dona.idDonor; ;
-            dona2.idVolunteer=dona.idVolunteer;
+            dona2.idSick=dona.idSick;
             dona2.statusDonation=dona.statusDonation;
         }
 
