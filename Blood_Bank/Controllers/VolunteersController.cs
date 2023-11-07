@@ -13,7 +13,12 @@ namespace Blood_Bank.Controllers
         {
             return volunteers;
         }
-
+        [HttpPut("{id}")]
+        public Volunteers Get(int id)
+        {
+            var volu = volunteers.Find(v => v.idVolunteer == id);
+            return volu;
+        }
         [HttpPost]
         public void Post(Volunteers vol)
         {

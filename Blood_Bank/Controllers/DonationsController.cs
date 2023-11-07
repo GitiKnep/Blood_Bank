@@ -17,8 +17,14 @@ namespace Blood_Bank.Controllers
             return donations;
         }
 
-        
-        
+        [HttpPut("{id}")]
+       public Donations Get(int id)
+        {
+           var donat = donations.Find(d => d.idDonation == id);
+            return donat;
+        }
+
+
         [HttpPost]
         public void Post(Donations dona)
         {
