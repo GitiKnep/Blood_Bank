@@ -9,48 +9,67 @@ namespace Blood_Bank.Controllers
     [ApiController]
     public class DonationsController : ControllerBase
     {
-        private static List<Donations> donations = new List<Donations>();
+        private readonly DataContext _context;
+        public DonationsController(DataContext context)
+        {
+            _context = context;
+        }
 
         // GET: api/<DonationsController>
         [HttpGet]
         public IEnumerable<Donations> Get()
         {
-            return donations;
+            return _context.DonationsList;
         }
 
         // GET api/<DonationsController>/5
         [HttpGet("{id}")]
-        public Donations Get(int id)
+        public ActionResult <Donations> Get(int id)
         {
-            var donat = donations.Find(d => d.idDonation == id);
+            var donat = _context.DonationsList.Find(d => d.idDonation == id);
+            if(donat == null)
+            {
+                return NotFound();
+            }
             return donat;
+
         }
 
         // POST api/<DonationsController>
         [HttpPost]
         public void Post(Donations dona)
         {
-            donations.Add(dona);
+            _context.DonationsList.Add(dona);
 
         }
 
         // PUT api/<DonationsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, Donations dona)
+        public ActionResult Put(int id, Donations dona)
         {
-            var dona2 = donations.Find(d => d.idDonation == id);
+            var dona2 = _context.DonationsList.Find(d => d.idDonation == id);
+            if(dona2 == null)
+            {
+                return NotFound();
+            }
             dona2.idDonation = dona.idDonation;
             dona2.idDonor = dona.idDonor; ;
             dona2.idSick = dona.idSick;
             dona2.statusDonation = dona.statusDonation;
+            return Ok(dona2);
         }
 
         // DELETE api/<DonationsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            var dona1 = donations.Find(v => v.idDonation == id);
-            donations.Remove(dona1);
+            var dona1 = _context.DonationsList.Find(v => v.idDonation == id);
+            if(dona1 == null)
+            {
+                return NotFound();
+            }
+            _context.DonationsList.Remove(dona1);
+            return Ok(dona1);   
         }
     }
 }
