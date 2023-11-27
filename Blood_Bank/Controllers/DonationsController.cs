@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Blood_Bank.Entities;
+using Blood_Bank.Core.Entities;
 using Microsoft.Extensions.Options;
+using Blood_Bank.Service;
+using Blood_Bank.Core.Services;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Blood_Bank.Controllers
@@ -9,67 +11,48 @@ namespace Blood_Bank.Controllers
     [ApiController]
     public class DonationsController : ControllerBase
     {
-        private readonly DataContext _context;
-        public DonationsController(DataContext context)
+        private readonly IDonationsService _donationsService;
+        public DonationsController(IDonationsService donationsService)
         {
-            _context = context;
+            _donationsService = donationsService;
         }
-
+       
         // GET: api/<DonationsController>
         [HttpGet]
-        public IEnumerable<Donations> Get()
+        public IEnumerable<Donations> GetAll()
         {
-            return _context.DonationsList;
+            return (IEnumerable<Donations>)_donationsService.GetAll();
         }
 
         // GET api/<DonationsController>/5
         [HttpGet("{id}")]
-        public ActionResult <Donations> Get(int id)
+        public ActionResult < Donations> Get(int id)
         {
-            var donat = _context.DonationsList.Find(d => d.idDonation == id);
-            if(donat == null)
-            {
-                return NotFound();
-            }
-            return donat;
-
+            return Ok(_donationsService.Get(id));
         }
 
         // POST api/<DonationsController>
         [HttpPost]
         public void Post(Donations dona)
         {
-            _context.DonationsList.Add(dona);
+            _donationsService.Post(dona);
 
         }
 
         // PUT api/<DonationsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, Donations dona)
+        public void Put(int id, Donations dona)
         {
-            var dona2 = _context.DonationsList.Find(d => d.idDonation == id);
-            if(dona2 == null)
-            {
-                return NotFound();
-            }
-            dona2.idDonation = dona.idDonation;
-            dona2.idDonor = dona.idDonor; ;
-            dona2.idSick = dona.idSick;
-            dona2.statusDonation = dona.statusDonation;
-            return Ok(dona2);
+           _donationsService.Put(id,dona);
         }
 
         // DELETE api/<DonationsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public void Delete(int id)
         {
-            var dona1 = _context.DonationsList.Find(v => v.idDonation == id);
-            if(dona1 == null)
-            {
-                return NotFound();
-            }
-            _context.DonationsList.Remove(dona1);
-            return Ok(dona1);   
+            
+           _donationsService.Delete(id);
+
         }
     }
 }

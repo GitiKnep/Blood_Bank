@@ -1,4 +1,4 @@
-﻿namespace Blood_Bank.Entities
+﻿namespace Blood_Bank.Core.Entities
 {
     public class Sicks
     {

@@ -1,78 +1,62 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Blood_Bank.Entities;
+using System;
+using Blood_Bank.Core.Entities;
+using System.Threading.Tasks;
+using Blood_Bank.Service;
+using Blood_Bank.Core.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Blood_Bank.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController] 
+    [ApiController]
     public class SicksController : ControllerBase
     {
-        private readonly DataContext _context;
-        public SicksController(DataContext context)
+
+        private readonly ISicksService _sicksService;
+        public SicksController(ISicksService sicksService)
         {
-            _context = context;
+            _sicksService = sicksService;
         }
 
-
-        // GET: api/<SicksController>
+        // GET: api/<DonationsController>
         [HttpGet]
         public IEnumerable<Sicks> Get()
         {
-
-            return _context.SicksList;
+            return (IEnumerable<Sicks>)_sicksService.Get();
         }
 
-        // GET api/<SicksController>/5
+        // GET api/<DonationsController>/5
         [HttpGet("{id}")]
-        public ActionResult <Sicks> Get(int id)
+        public ActionResult<Sicks> Get(int id)
         {
-            var sic3 = _context.SicksList.Find(s => s.idSick == id);
-            if (sic3 == null)
-            {
-                return NotFound();
-            }
-            return sic3;
+            return Ok(_sicksService.Get(id));
         }
 
-        // POST api/<SicksController>
+        // POST api/<DonationsController>
         [HttpPost]
         public void Post(Sicks sic)
         {
-            _context.SicksList.Add(sic);
+            _sicksService.Post(sic);
 
         }
 
-        // PUT api/<SicksController>/5
+        // PUT api/<DonationsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, Sicks sic)
+        public void Put(int id, Sicks sic)
         {
-            var sic2 = _context.SicksList.Find(s => s.idSick == id);
-            if (sic2 == null)
-            {
-                NotFound();
-            }
-            sic2.idSick = sic.idSick;
-            sic2.fNameSick = sic.fNameSick;
-            sic2.lNameSick = sic.lNameSick;
-            sic2.typeBloodSick = sic.typeBloodSick;
-            sic2.pelephoneSick = sic.pelephoneSick;
-            sic2.statusSick = sic.statusSick;
-            return Ok(sic2);
+           _sicksService.Put(id, sic);
         }
 
-        // DELETE api/<SicksController>/5
+        // DELETE api/<DonationsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public void Delete(int id)
         {
-            var sic1 = _context.SicksList.Find(s => s.idSick == id);
-            if (sic1 == null)
-            {
-                return NotFound();
-            }
-            _context.SicksList.Remove(sic1);
-            return Ok();
+
+            _sicksService.Delete(id);
+            
         }
+    }
     }
 }
