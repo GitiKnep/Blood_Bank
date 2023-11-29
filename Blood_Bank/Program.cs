@@ -17,12 +17,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<DonationsService>();
-builder.Services.AddScoped<DonorsService>();
-builder.Services.AddScoped<SicksService>();
-builder.Services.AddScoped<DonationsReposotory>();
-builder.Services.AddScoped<DonorsReposotory>();
-builder.Services.AddScoped<SicksReposotory>();
+builder.Services.AddScoped<IDonationsService, DonationsService>();
+builder.Services.AddScoped<IDonorsService, DonorsService>();
+builder.Services.AddScoped<ISicksService, SicksService>();
+builder.Services.AddScoped<IDonationsRepositories, DonationsReposotory>();
+builder.Services.AddScoped<IDonorsRepositories, DonorsReposotory>();
+builder.Services.AddScoped<ISicksRepositories, SicksReposotory>();
 builder.Services.AddSingleton<DataContext>();
 
 

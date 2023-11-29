@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Blood_Bank.Data.Repositories;
 using Blood_Bank.Core.Repositories;
+using Blood_Bank.Core.Services;
 
 namespace Blood_Bank.Service
 {
-    public class DonorsService
+    public class DonorsService : IDonorsService
     {
         private readonly IDonorsRepositories _donorsRepositories;
         public DonorsService(IDonorsRepositories donorsRepositories)

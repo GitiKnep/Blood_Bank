@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Blood_Bank.Core.Entities;
 using Blood_Bank.Core.Repositories;
+using Blood_Bank.Core.Services;
 using Blood_Bank.Data;
 
 namespace Blood_Bank.Service
 {
-    public class DonationsService
+    public class DonationsService : IDonationsService
     {
-        private readonly IDonationsRepositories _donationsRepositories ;
+        private readonly IDonationsRepositories _donationsRepositories;
         public DonationsService(IDonationsRepositories donationsRepositories)
         {
             _donationsRepositories = donationsRepositories;
@@ -35,7 +36,7 @@ namespace Blood_Bank.Service
 
         public void Put(int id, Donations dona)
         {
-            _donationsRepositories.Put(id,dona);
+            _donationsRepositories.Put(id, dona);
         }
 
 

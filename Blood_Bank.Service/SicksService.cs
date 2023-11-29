@@ -1,5 +1,6 @@
 ﻿using Blood_Bank.Core.Entities;
 using Blood_Bank.Core.Repositories;
+using Blood_Bank.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blood_Bank.Service
 {
-    public class SicksService
+    public class SicksService : ISicksService
     {
         private readonly ISicksRepositories _sicksRepositories;
         public SicksService(ISicksRepositories sicksRepositories)
@@ -41,7 +42,7 @@ namespace Blood_Bank.Service
         public void Delete(int id)
         {
             _sicksRepositories.Delete(id);
-            
+
         }
     }
 }
