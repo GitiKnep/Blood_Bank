@@ -5,7 +5,6 @@ using Blood_Bank.Data;
 using Blood_Bank.Data.Repositories;
 using Blood_Bank.Service;
 using Blood_Bank.Core.Services;
-using DataContext = Blood_Bank.Data.DataContext;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,14 +15,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<IDonationsService, DonationsService>();
 builder.Services.AddScoped<IDonorsService, DonorsService>();
 builder.Services.AddScoped<ISicksService, SicksService>();
 builder.Services.AddScoped<IDonationsRepositories, DonationsReposotory>();
 builder.Services.AddScoped<IDonorsRepositories, DonorsReposotory>();
 builder.Services.AddScoped<ISicksRepositories, SicksReposotory>();
-builder.Services.AddSingleton<DataContext>();
+
 
 
 var app = builder.Build();

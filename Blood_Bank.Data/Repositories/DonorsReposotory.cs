@@ -18,25 +18,33 @@ namespace Blood_Bank.Data.Repositories
 
         public List<Donors> GetAll()
         {
-            return _context.DonorsList;
+            return _context.DonorsList.ToList();
 
         }
 
         public Donors Get(int id)
         {
-            return _context.DonorsList.Find(d => d.idDonor == id);
+            return _context.DonorsList.ToList().Find(d => d.idDonor == id);
 
         }
 
 
         public void Post(Donors don)
         {
-            _context.DonorsList.Add(don);
+            _context.DonorsList.Add(new Donors
+            {
+              idDonor = _context.CntDonors++,
+               fNameDonor = don.fNameDonor,
+                lNameDonor = don.lNameDonor,
+          statusDonor = don.statusDonor,
+           pelephoneDonor = don.pelephoneDonor,
+            typeBloodDonor = don.typeBloodDonor
+        });
 
         }
         public void Put(int id, Donors don)
         {
-            var don2 = _context.DonorsList.Find(d => d.idDonor == id);
+            var don2 = _context.DonorsList.ToList().Find(d => d.idDonor == id);
             don2.idDonor = don.idDonor;
             don2.fNameDonor = don.fNameDonor;
             don2.lNameDonor = don.lNameDonor;
@@ -48,7 +56,7 @@ namespace Blood_Bank.Data.Repositories
 
         public void Delete(int id)
         {
-            var don1 = _context.DonorsList.Find(v => v.idDonor == id);
+            var don1 = _context.DonorsList.ToList().Find(v => v.idDonor == id);
             _context.DonorsList.Remove(don1);
 
         }

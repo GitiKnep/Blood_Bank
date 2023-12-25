@@ -1,7 +1,10 @@
-﻿namespace Blood_Bank.Core.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Blood_Bank.Core.Entities
 {
     public class Sicks
     {
+        [Key]
         public int idSick { get; set; }
         public string? fNameSick { get; set; }
         public string? lNameSick { get; set; }

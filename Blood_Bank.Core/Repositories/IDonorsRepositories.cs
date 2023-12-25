@@ -11,10 +11,10 @@ namespace Blood_Bank.Core.Repositories
     {
         List<Donors> GetAll();
         Donors Get(int id);
-        void Post(Donors don);
+      public void Post(Donors don);
 
-        void Put(int id, Donors don);
-        void Delete(int id);
+      public void Put(int id, Donors don);
+      public  void Delete(int id);
 
     }
 }

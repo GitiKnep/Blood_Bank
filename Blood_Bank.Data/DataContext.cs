@@ -1,20 +1,29 @@
 ﻿using Blood_Bank.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace Blood_Bank.Data
 {
-    public class DataContext
+    public class DataContext : DbContext
     {
-        public  List<Donors> DonorsList { get; set; }
-        public  List<Donations> DonationsList { get; set; }
-        public  List<Sicks> SicksList { get; set; }
-        public DataContext()
-        {
-            DonorsList = new List<Donors>();
-            DonorsList.Add(new Donors { idDonor = 1, fNameDonor = "shifi", lNameDonor = "weingarten", typeBloodDonor = "A", pelephoneDonor = "0556773857", statusDonor = 1 });
-            DonationsList = new List<Donations>();
-            DonationsList.Add(new Donations { idDonation = 2, idDonor =1 ,idSick=3,statusDonation=2 });
-            SicksList = new List<Sicks>();
-            SicksList.Add(new Sicks { idSick = 1, fNameSick = "shifi", lNameSick = "weingarten", typeBloodSick = "A", pelephoneSick = "0556773857", statusSick = 1 });
+        public DbSet<Donors> DonorsList { get; set; }
+        public DbSet<Donations> DonationsList { get; set; }
+        public DbSet<Sicks> SicksList { get; set; }
+        public int CntDonors{ get; set; }
+        public int CntDonation { get; set; }
+        public int CntSicks { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BloodBankDb");
         }
+        //public DataContext()
+        //{
+        //    DonorsList = new List<Donors>();
+        //    DonorsList.Add(new Donors { idDonor = 1, fNameDonor = "giti", lNameDonor = "knep", typeBloodDonor = "A", pelephoneDonor = "0558715857", statusDonor = 1 });
+        //    DonationsList = new List<Donations>();
+        //    DonationsList.Add(new Donations { idDonation = 2, idDonor =1 ,idSick=3,statusDonation=2 });
+        //    SicksList = new List<Sicks>();
+        //    SicksList.Add(new Sicks { idSick = 1, fNameSick = "giti", lNameSick = "knep", typeBloodSick = "A", pelephoneSick = "0555824857", statusSick = 1 });
+
+        //}
     }
 }

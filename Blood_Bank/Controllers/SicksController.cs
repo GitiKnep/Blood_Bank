@@ -22,9 +22,9 @@ namespace Blood_Bank.Controllers
 
         // GET: api/<DonationsController>
         [HttpGet]
-        public IEnumerable<Sicks> Get()
+        public IEnumerable<Sicks> GetAll()
         {
-            return (IEnumerable<Sicks>)_sicksService.Get();
+            return (IEnumerable<Sicks>)_sicksService.GetAll();
         }
 
         // GET api/<DonationsController>/5
@@ -59,4 +59,4 @@ namespace Blood_Bank.Controllers
         }
     }
     }
-}
+
