@@ -13,7 +13,7 @@ namespace Blood_Bank.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BloodBankDb");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BloodBank_Db");
         }
         //public DataContext()
         //{

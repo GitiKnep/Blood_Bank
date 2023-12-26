@@ -4,7 +4,7 @@
 
 namespace Blood_Bank.Data.Migrations
 {
-    public partial class MigrationName : Migration
+    public partial class myDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
