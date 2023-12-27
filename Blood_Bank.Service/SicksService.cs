@@ -26,16 +26,16 @@ namespace Blood_Bank.Service
 
         }
 
-        public void Post(Sicks sic)
+        public Sicks Post(Sicks sic)
         {
-            _sicksRepositories.Post(sic);
+           return _sicksRepositories.Post(sic);
 
         }
 
 
-        public void Put(int id, Sicks sic)
+        public Sicks Put(int id, Sicks sic)
         {
-            _sicksRepositories.Put(id, sic);
+          return _sicksRepositories.Put(id, sic);
         }
 
 

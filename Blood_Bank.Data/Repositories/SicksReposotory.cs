@@ -24,38 +24,36 @@ namespace Blood_Bank.Data.Repositories
 
         public Sicks Get(int id)
         {
-            return _context.SicksList.ToList().Find(s => s.idSick == id);
+            return _context.SicksList.Find(id);
 
         }
-        public void Post(Sicks sic)
+        public Sicks Post(Sicks sic)
         {
-            _context.SicksList.Add(new Sicks
-            {
-                idSick = _context.CntSicks++,
-                fNameSick = sic.fNameSick,
-                lNameSick = sic.lNameSick,
-                typeBloodSick = sic.typeBloodSick,
-                pelephoneSick = sic.pelephoneSick,
-                statusSick = sic.statusSick
-        });
-
+            _context.SicksList.Add(sic);
+            _context.SaveChanges();
+            return sic;
         }
 
-        public void Put(int id, Sicks sic)
+        public Sicks Put(int id, Sicks sic)
         {
-            var sic2 = _context.SicksList.ToList().Find(s => s.idSick == id);
+            var sic2 = Get(id);
+            if (sic2 != null) { 
             sic2.idSick = sic.idSick;
             sic2.fNameSick = sic.fNameSick;
             sic2.lNameSick = sic.lNameSick;
             sic2.typeBloodSick = sic.typeBloodSick;
             sic2.pelephoneSick = sic.pelephoneSick;
             sic2.statusSick = sic.statusSick;
+             _context.SaveChanges();
+            }
+            return sic2;
         }
 
         public void Delete(int id)
         {
-            var sic1 = _context.SicksList.ToList().Find(s => s.idSick == id);
+            var sic1 =Get(id);
             _context.SicksList.Remove(sic1);
+            _context.SaveChanges();
 
         }
     }

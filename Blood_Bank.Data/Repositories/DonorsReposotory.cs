@@ -24,40 +24,38 @@ namespace Blood_Bank.Data.Repositories
 
         public Donors Get(int id)
         {
-            return _context.DonorsList.ToList().Find(d => d.idDonor == id);
+            return _context.DonorsList.Find(id);
 
         }
 
 
-        public void Post(Donors don)
+        public Donors Post(Donors don)
         {
-            _context.DonorsList.Add(new Donors
+            _context.DonorsList.Add(don);
+            _context.SaveChanges();
+            return don;
+        }
+        public Donors Put(int id, Donors don)
+        {
+            var don2 = Get(id);
+            if (don2 != null)
             {
-              idDonor = _context.CntDonors++,
-               fNameDonor = don.fNameDonor,
-                lNameDonor = don.lNameDonor,
-          statusDonor = don.statusDonor,
-           pelephoneDonor = don.pelephoneDonor,
-            typeBloodDonor = don.typeBloodDonor
-        });
-
-        }
-        public void Put(int id, Donors don)
-        {
-            var don2 = _context.DonorsList.ToList().Find(d => d.idDonor == id);
-            don2.idDonor = don.idDonor;
-            don2.fNameDonor = don.fNameDonor;
-            don2.lNameDonor = don.lNameDonor;
-            don2.statusDonor = don.statusDonor;
-            don2.pelephoneDonor = don.pelephoneDonor;
-            don2.typeBloodDonor = don.typeBloodDonor;
-
+                don2.idDonor = don.idDonor;
+                don2.fNameDonor = don.fNameDonor;
+                don2.lNameDonor = don.lNameDonor;
+                don2.statusDonor = don.statusDonor;
+                don2.pelephoneDonor = don.pelephoneDonor;
+                don2.typeBloodDonor = don.typeBloodDonor;
+                _context.SaveChanges();
+            }
+            return don2;
         }
 
         public void Delete(int id)
         {
-            var don1 = _context.DonorsList.ToList().Find(v => v.idDonor == id);
+            var don1 = Get(id);
             _context.DonorsList.Remove(don1);
+            _context.SaveChanges();
 
         }
     }

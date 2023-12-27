@@ -9,10 +9,10 @@ namespace Blood_Bank.Core.Services
 {
     public interface ISicksService
     {
-      public  IEnumerable<Sicks> GetAll();
-       public Sicks Get(int id);
-       public void Post(Sicks sic);
-       public void Put(int id, Sicks sic);
-       public void Delete(int id);
+       IEnumerable<Sicks> GetAll();
+        Sicks Get(int id);
+       Sicks Post(Sicks sic);
+       Sicks  Put(int id, Sicks sic);
+      void Delete(int id);
     }
 }

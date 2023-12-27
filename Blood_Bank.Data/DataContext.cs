@@ -7,10 +7,7 @@ namespace Blood_Bank.Data
         public DbSet<Donors> DonorsList { get; set; }
         public DbSet<Donations> DonationsList { get; set; }
         public DbSet<Sicks> SicksList { get; set; }
-        public int CntDonors{ get; set; }
-        public int CntDonation { get; set; }
-        public int CntSicks { get; set; }
-
+     
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BloodBank_Db");

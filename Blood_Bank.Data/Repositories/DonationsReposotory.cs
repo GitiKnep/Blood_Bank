@@ -21,37 +21,40 @@ namespace Blood_Bank.Data.Repositories
         }
         public Donations Get(int id)
         {
-            return _context.DonationsList.ToList().Find(d => d.idDonation == id);
+            return _context.DonationsList.Find(id);
 
         }
 
-        public void Post(Donations dona)
+        public Donations Post(Donations dona)
         {
-            _context.DonationsList.Add(new Donations
-            {
-                idDonation =_context.CntDonation++,
-                  idDonor = dona.idDonor,
-                 idSick = dona.idSick
-
-        });
+            _context.DonationsList.Add(dona);
+            _context.SaveChanges();
+            return dona;
 
         }
 
 
-        public void Put(int id, Donations dona)
+        public Donations Put(int id, Donations dona)
         {
-            var dona2 = _context.DonationsList.ToList().Find(d => d.idDonation == id);
-            dona2.idDonation = dona.idDonation;
-            dona2.idDonor = dona.idDonor; ;
-            dona2.idSick = dona.idSick;
-
+            var dona2 = Get(id);
+            if (dona2 != null) {
+                dona2.idDonation = dona.idDonation;
+                dona2.idDonor = dona.idDonor; ;
+                dona2.idSick = dona.idSick;
+                _context.SaveChanges();
+            }
+            return dona2;
         }
+        
+
+        
 
 
         public void Delete(int id)
         {
-            var dona1 = _context.DonationsList.ToList().Find(v => v.idDonation == id);
+          var dona1 = Get(id);
             _context.DonationsList.Remove(dona1);
+            _context.SaveChanges();
 
         }
     }

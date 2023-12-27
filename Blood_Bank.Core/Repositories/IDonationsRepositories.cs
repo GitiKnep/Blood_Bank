@@ -11,9 +11,9 @@ namespace Blood_Bank.Core.Repositories
     {
         List<Donations> GetAll();
         Donations Get(int id);
-       public void Post(Donations dona);
+       Donations Post(Donations dona);
 
-       public void Put(int id, Donations dona);
+      Donations Put(int id, Donations dona);
        public void Delete(int id);
 
     }

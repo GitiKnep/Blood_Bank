@@ -27,16 +27,16 @@ namespace Blood_Bank.Service
 
         }
 
-        public void Post(Donations dona)
+        public Donations Post(Donations dona)
         {
-            _donationsRepositories.Post(dona);
+           return _donationsRepositories.Post(dona);
 
         }
 
 
-        public void Put(int id, Donations dona)
+        public Donations Put(int id, Donations dona)
         {
-            _donationsRepositories.Put(id, dona);
+          return  _donationsRepositories.Put(id, dona);
         }
 
 

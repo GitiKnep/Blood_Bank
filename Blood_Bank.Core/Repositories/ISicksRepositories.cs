@@ -11,9 +11,9 @@ namespace Blood_Bank.Core.Repositories
     {
         List<Sicks> GetAll();
         Sicks Get(int id);
-      public void Post(Sicks sic);
+      Sicks Post(Sicks sic);
 
-      public  void Put(int id, Sicks sic);
-       public void Delete(int id);
+      Sicks Put(int id, Sicks sic);
+       void Delete(int id);
     }
 }

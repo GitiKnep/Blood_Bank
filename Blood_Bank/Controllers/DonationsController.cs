@@ -19,40 +19,45 @@ namespace Blood_Bank.Controllers
        
         // GET: api/<DonationsController>
         [HttpGet]
-        public IEnumerable<Donations> GetAll()
+        public IActionResult GetAll()
         {
-            return (IEnumerable<Donations>)_donationsService.GetAll();
+            return Ok(_donationsService.GetAll());
         }
 
         // GET api/<DonationsController>/5
         [HttpGet("{id}")]
-        public ActionResult < Donations> Get(int id)
+        public IActionResult Get(int id)
         {
-            return Ok(_donationsService.Get(id));
+            var donations = _donationsService.Get(id);
+            if(donations == null)
+            {
+                return NotFound();
+            }
+            return Ok(donations);
         }
 
         // POST api/<DonationsController>
         [HttpPost]
-        public void Post(Donations dona)
+        public ActionResult Post([FromBody] Donations dona)
         {
-            _donationsService.Post(dona);
+            return Ok( _donationsService.Post(dona));
 
         }
 
         // PUT api/<DonationsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, Donations dona)
+        public ActionResult Put(int id, [FromBody] Donations dona)
         {
-           _donationsService.Put(id,dona);
+            return Ok(_donationsService.Put(id,dona));
         }
 
         // DELETE api/<DonationsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
             
            _donationsService.Delete(id);
-
+            return NoContent();
         }
     }
 }
