@@ -3,6 +3,9 @@ using Blood_Bank.Core.Entities;
 using Microsoft.Extensions.Options;
 using Blood_Bank.Service;
 using Blood_Bank.Core.Services;
+using Blood_Bank.Models;
+using AutoMapper;
+using Blood_Bank.Core.DTOs;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Blood_Bank.Controllers
@@ -11,9 +14,12 @@ namespace Blood_Bank.Controllers
     [ApiController]
     public class DonationsController : ControllerBase
     {
+        
         private readonly IDonationsService _donationsService;
-        public DonationsController(IDonationsService donationsService)
+        private readonly IMapper _mapper;
+        public DonationsController(IDonationsService donationsService, IMapper mapper)
         {
+            _mapper = mapper;
             _donationsService = donationsService;
         }
        
@@ -21,7 +27,13 @@ namespace Blood_Bank.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_donationsService.GetAll());
+            var lst= _donationsService.GetAll();
+            var lstDto=new List<DonationsDto>();
+            foreach(var item in lst)
+            {
+                lstDto.Add(_mapper.Map<DonationsDto>(item));
+            }
+            return Ok(lstDto);
         }
 
         // GET api/<DonationsController>/5
@@ -33,14 +45,16 @@ namespace Blood_Bank.Controllers
             {
                 return NotFound();
             }
-            return Ok(donations);
+            return Ok(_mapper.Map<DonationsDto>(donations));
         }
 
         // POST api/<DonationsController>
         [HttpPost]
-        public ActionResult Post([FromBody] Donations dona)
+        public ActionResult Post([FromBody] DonationsModel dona)
         {
-            return Ok( _donationsService.Post(dona));
+            var donationPost = new Donations { idDonor = dona.idDonor, idSick = dona.idSick, statusDonation = dona.statusDonation };
+            _donationsService.Post(donationPost);
+            return Ok(_mapper.Map<DonationsDto>(donationPost) );
 
         }
 

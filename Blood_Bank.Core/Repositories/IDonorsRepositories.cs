@@ -9,11 +9,11 @@ namespace Blood_Bank.Core.Repositories
 {
     public interface IDonorsRepositories
     {
-        List<Donors> GetAll();
-        Donors Get(int id);
-      Donors Post(Donors don);
+       public List<Donors> GetAll();
+        public Donors Get(int id);
+        public Donors Post(Donors don);
 
-      Donors Put(int id, Donors don);
+        public Donors Put(int id, Donors don);
       public  void Delete(int id);
 
     }

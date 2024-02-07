@@ -40,7 +40,7 @@ namespace Blood_Bank.Data.Repositories
             var don2 = Get(id);
             if (don2 != null)
             {
-                don2.idDonor = don.idDonor;
+               
                 don2.fNameDonor = don.fNameDonor;
                 don2.lNameDonor = don.lNameDonor;
                 don2.statusDonor = don.statusDonor;

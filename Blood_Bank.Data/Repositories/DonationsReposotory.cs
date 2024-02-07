@@ -38,9 +38,9 @@ namespace Blood_Bank.Data.Repositories
         {
             var dona2 = Get(id);
             if (dona2 != null) {
-                dona2.idDonation = dona.idDonation;
-                dona2.idDonor = dona.idDonor; ;
-                dona2.idSick = dona.idSick;
+               dona2.idDonor=dona.idDonor;
+                dona2.idSick=dona.idSick;
+                dona2.statusDonation = dona.statusDonation;
                 _context.SaveChanges();
             }
             return dona2;

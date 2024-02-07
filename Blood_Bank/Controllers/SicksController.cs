@@ -4,6 +4,9 @@ using Blood_Bank.Core.Entities;
 using System.Threading.Tasks;
 using Blood_Bank.Service;
 using Blood_Bank.Core.Services;
+using Blood_Bank.Models;
+using AutoMapper;
+using Blood_Bank.Core.DTOs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,8 +18,11 @@ namespace Blood_Bank.Controllers
     {
 
         private readonly ISicksService _sicksService;
-        public SicksController(ISicksService sicksService)
+        private readonly IMapper _mapper;
+
+        public SicksController(ISicksService sicksService, IMapper mapper)
         {
+            _mapper = mapper;
             _sicksService = sicksService;
         }
 
@@ -24,7 +30,13 @@ namespace Blood_Bank.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_sicksService.GetAll());
+            var lst = _sicksService.GetAll();
+            var lstDto = new List<SicksDto>();
+            foreach (var item in lst)
+            {
+                lstDto.Add(_mapper.Map<SicksDto>(item));
+            }
+            return Ok(lstDto);
         }
 
         // GET api/<DonationsController>/5
@@ -36,14 +48,16 @@ namespace Blood_Bank.Controllers
             {
                 return NotFound();
             }
-            return Ok(sic1);
+            return Ok(_mapper.Map<SicksDto>(sic1));
         }
 
         // POST api/<DonationsController>
         [HttpPost]
-        public ActionResult Post([FromBody] Sicks sic)
+        public ActionResult Post([FromBody] SicksModel sic)
         {
-            return Ok(_sicksService.Post(sic));
+            var sickPost=new Sicks {fNameSick=sic.fNameSick,lNameSick=sic.lNameSick,typeBloodSick=sic.typeBloodSick,statusSick=sic.statusSick,pelephoneSick=sic.pelephoneSick };
+            _sicksService.Post(sickPost);
+            return Ok(_mapper.Map<SicksDto>(sickPost));
 
         }
 

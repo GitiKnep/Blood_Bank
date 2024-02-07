@@ -29,6 +29,12 @@ namespace Blood_Bank.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idDonation"), 1L, 1);
 
+                    b.Property<int>("DonoridDonor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SickidSick")
+                        .HasColumnType("int");
+
                     b.Property<int>("idDonor")
                         .HasColumnType("int");
 
@@ -39,6 +45,10 @@ namespace Blood_Bank.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("idDonation");
+
+                    b.HasIndex("DonoridDonor");
+
+                    b.HasIndex("SickidSick");
 
                     b.ToTable("DonationsList");
                 });
@@ -97,6 +107,35 @@ namespace Blood_Bank.Data.Migrations
                     b.HasKey("idSick");
 
                     b.ToTable("SicksList");
+                });
+
+            modelBuilder.Entity("Blood_Bank.Core.Entities.Donations", b =>
+                {
+                    b.HasOne("Blood_Bank.Core.Entities.Donors", "Donor")
+                        .WithMany("donations")
+                        .HasForeignKey("DonoridDonor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Blood_Bank.Core.Entities.Sicks", "Sick")
+                        .WithMany("donations")
+                        .HasForeignKey("SickidSick")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Donor");
+
+                    b.Navigation("Sick");
+                });
+
+            modelBuilder.Entity("Blood_Bank.Core.Entities.Donors", b =>
+                {
+                    b.Navigation("donations");
+                });
+
+            modelBuilder.Entity("Blood_Bank.Core.Entities.Sicks", b =>
+                {
+                    b.Navigation("donations");
                 });
 #pragma warning restore 612, 618
         }

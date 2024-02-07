@@ -9,11 +9,11 @@ namespace Blood_Bank.Core.Services
 {
     public interface IDonationsService
     {
-       IEnumerable<Donations> GetAll();
-       Donations Get(int id);
-       Donations Post(Donations dona);
-       Donations Put(int id, Donations dona);
-        void Delete(int id);
+        public IEnumerable<Donations> GetAll();
+        public Donations Get(int id);
+        public Donations Post(Donations dona);
+        public Donations Put(int id, Donations dona);
+        public void Delete(int id);
 
     }
 }

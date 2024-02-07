@@ -1,5 +1,8 @@
-﻿using Blood_Bank.Core.Entities;
+﻿using AutoMapper;
+using Blood_Bank.Core.DTOs;
+using Blood_Bank.Core.Entities;
 using Blood_Bank.Core.Services;
+using Blood_Bank.Models;
 using Blood_Bank.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,8 +15,10 @@ namespace Blood_Bank.Controllers
     public class DonorsController : ControllerBase
     {
         private readonly IDonorsService _donorsService;
-        public DonorsController(IDonorsService donorsService)
+        private readonly IMapper _mapper;
+        public DonorsController(IDonorsService donorsService, IMapper mapper)
         {
+            _mapper = mapper;
             _donorsService = donorsService;
         }
 
@@ -21,7 +26,13 @@ namespace Blood_Bank.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_donorsService.GetAll());
+            var lst = _donorsService.GetAll();
+            var lstDto=new List<DonorsDto>();
+            foreach (var item in lst)
+            {
+                lstDto.Add(_mapper.Map<DonorsDto>(item));
+            }
+            return Ok(lstDto);
         }
 
         // GET api/<DonationsController>/5
@@ -33,14 +44,16 @@ namespace Blood_Bank.Controllers
             {
                 return NotFound();
             }
-            return Ok(dono);
+            return Ok(_mapper.Map<DonorsDto>(dono));
         }
 
         // POST api/<DonationsController>
         [HttpPost]
-        public ActionResult Post([FromBody] Donors don)
+        public ActionResult Post([FromBody] DonorsModel don)
         {
-            return Ok( _donorsService.Post(don));
+            var donorPost=new Donors { fNameDonor=don.fNameDonor, lNameDonor=don.lNameDonor, pelephoneDonor=don.pelephoneDonor, statusDonor=don.statusDonor,typeBloodDonor=don.typeBloodDonor };
+            _donorsService.Post(donorPost);
+            return Ok(_mapper.Map<DonorsDto>(donorPost) );
 
         }
 

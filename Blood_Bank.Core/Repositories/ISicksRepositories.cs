@@ -9,11 +9,11 @@ namespace Blood_Bank.Core.Repositories
 {
     public interface ISicksRepositories
     {
-        List<Sicks> GetAll();
-        Sicks Get(int id);
-      Sicks Post(Sicks sic);
+        public List<Sicks> GetAll();
+        public Sicks Get(int id);
+        public Sicks Post(Sicks sic);
 
-      Sicks Put(int id, Sicks sic);
-       void Delete(int id);
+        public Sicks Put(int id, Sicks sic);
+        public void Delete(int id);
     }
 }

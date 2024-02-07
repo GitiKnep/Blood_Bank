@@ -38,7 +38,6 @@ namespace Blood_Bank.Data.Repositories
         {
             var sic2 = Get(id);
             if (sic2 != null) { 
-            sic2.idSick = sic.idSick;
             sic2.fNameSick = sic.fNameSick;
             sic2.lNameSick = sic.lNameSick;
             sic2.typeBloodSick = sic.typeBloodSick;
