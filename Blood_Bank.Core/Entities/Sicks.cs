@@ -2,10 +2,8 @@
 
 namespace Blood_Bank.Core.Entities
 {
-    public class Sicks
+    public class Sicks:BaseModel
     {
-        [Key]
-        public int idSick { get; set; }
         public string? fNameSick { get; set; }
         public string? lNameSick { get; set; }
         public string? typeBloodSick { get; set; }

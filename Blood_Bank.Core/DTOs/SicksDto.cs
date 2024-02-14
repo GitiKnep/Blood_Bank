@@ -8,7 +8,7 @@ namespace Blood_Bank.Core.DTOs
 {
     public class SicksDto
     {
-        public int idSick { get; set; }
+        public int Id { get; set; }
         public string? fNameSick { get; set; }
         public string? lNameSick { get; set; }
         public string? typeBloodSick { get; set; }

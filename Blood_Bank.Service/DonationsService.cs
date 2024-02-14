@@ -17,32 +17,32 @@ namespace Blood_Bank.Service
         {
             _donationsRepositories = donationsRepositories;
         }
-        public IEnumerable<Donations> GetAll()
+        public async Task<List<Donations>> GetAllDonationsAsync()
         {
-            return _donationsRepositories.GetAll();
+            return await _donationsRepositories.GetAllDonationsAsync();
         }
-        public Donations Get(int id)
+        public async Task<Donations> GetDonationByIdAsync(int id)
         {
-            return _donationsRepositories.Get(id);
-
-        }
-
-        public Donations Post(Donations dona)
-        {
-           return _donationsRepositories.Post(dona);
+            return await _donationsRepositories.GetDonationByIdAsync(id);
 
         }
 
-
-        public Donations Put(int id, Donations dona)
+        public async Task AddDonationAsync(Donations dona)
         {
-          return  _donationsRepositories.Put(id, dona);
+            await _donationsRepositories.AddDonationAsync(dona);
+
         }
 
 
-        public void Delete(int id)
+        public async Task UpdateDonationAsync(int id, Donations dona)
         {
-            _donationsRepositories.Delete(id);
+          await  _donationsRepositories.UpdateDonationAsync(id, dona);
+        }
+
+
+        public async Task DeleteDonationAsync(int id)
+        {
+           await _donationsRepositories.DeleteDonationAsync(id);
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Blood_Bank.Core.Entities;
 using Blood_Bank.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,42 +18,41 @@ namespace Blood_Bank.Data.Repositories
         }
 
 
-        public List<Sicks> GetAll()
+        public async Task<List<Sicks>> GetAllSicksAsync()
         {
-            return _context.SicksList.ToList();
+            return await _context.SicksList.ToListAsync();
         }
 
-        public Sicks Get(int id)
+        public async Task<Sicks> GetSickByIdAsync(int id)
         {
-            return _context.SicksList.Find(id);
+            return await _context.SicksList.FindAsync(id);
 
         }
-        public Sicks Post(Sicks sic)
+        public async Task AddSickAsync(Sicks sic)
         {
             _context.SicksList.Add(sic);
-            _context.SaveChanges();
-            return sic;
+           await _context.SaveChangesAsync();
+           
         }
 
-        public Sicks Put(int id, Sicks sic)
+        public async Task UpdateSickAsync(int id, Sicks sic)
         {
-            var sic2 = Get(id);
+            var sic2 = GetSickByIdAsync(id).Result;
             if (sic2 != null) { 
             sic2.fNameSick = sic.fNameSick;
             sic2.lNameSick = sic.lNameSick;
             sic2.typeBloodSick = sic.typeBloodSick;
             sic2.pelephoneSick = sic.pelephoneSick;
             sic2.statusSick = sic.statusSick;
-             _context.SaveChanges();
+            await _context.SaveChangesAsync();
             }
-            return sic2;
         }
 
-        public void Delete(int id)
+        public async Task DeleteSickAsync(int id)
         {
-            var sic1 =Get(id);
-            _context.SicksList.Remove(sic1);
-            _context.SaveChanges();
+            var sic1 = GetSickByIdAsync(id);
+            _context.SicksList.Remove(sic1.Result);
+           await _context.SaveChangesAsync();
 
         }
     }

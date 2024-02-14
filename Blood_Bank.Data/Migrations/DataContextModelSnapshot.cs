@@ -23,16 +23,16 @@ namespace Blood_Bank.Data.Migrations
 
             modelBuilder.Entity("Blood_Bank.Core.Entities.Donations", b =>
                 {
-                    b.Property<int>("idDonation")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idDonation"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DonoridDonor")
+                    b.Property<int>("DonorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SickidSick")
+                    b.Property<int>("SickId")
                         .HasColumnType("int");
 
                     b.Property<int>("idDonor")
@@ -44,22 +44,22 @@ namespace Blood_Bank.Data.Migrations
                     b.Property<int>("statusDonation")
                         .HasColumnType("int");
 
-                    b.HasKey("idDonation");
+                    b.HasKey("Id");
 
-                    b.HasIndex("DonoridDonor");
+                    b.HasIndex("DonorId");
 
-                    b.HasIndex("SickidSick");
+                    b.HasIndex("SickId");
 
                     b.ToTable("DonationsList");
                 });
 
             modelBuilder.Entity("Blood_Bank.Core.Entities.Donors", b =>
                 {
-                    b.Property<int>("idDonor")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idDonor"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("fNameDonor")
                         .HasColumnType("nvarchar(max)");
@@ -76,18 +76,18 @@ namespace Blood_Bank.Data.Migrations
                     b.Property<string>("typeBloodDonor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("idDonor");
+                    b.HasKey("Id");
 
                     b.ToTable("DonorsList");
                 });
 
             modelBuilder.Entity("Blood_Bank.Core.Entities.Sicks", b =>
                 {
-                    b.Property<int>("idSick")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idSick"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("fNameSick")
                         .HasColumnType("nvarchar(max)");
@@ -104,7 +104,7 @@ namespace Blood_Bank.Data.Migrations
                     b.Property<string>("typeBloodSick")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("idSick");
+                    b.HasKey("Id");
 
                     b.ToTable("SicksList");
                 });
@@ -113,13 +113,13 @@ namespace Blood_Bank.Data.Migrations
                 {
                     b.HasOne("Blood_Bank.Core.Entities.Donors", "Donor")
                         .WithMany("donations")
-                        .HasForeignKey("DonoridDonor")
+                        .HasForeignKey("DonorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Blood_Bank.Core.Entities.Sicks", "Sick")
                         .WithMany("donations")
-                        .HasForeignKey("SickidSick")
+                        .HasForeignKey("SickId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

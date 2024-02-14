@@ -2,10 +2,9 @@
 
 namespace Blood_Bank.Core.Entities
 {
-    public class Donations
+    public class Donations:BaseModel
     {
-        [Key]
-        public int idDonation { get; set; }
+      
         public int idSick { get; set; }
         public Sicks Sick { get; set; }
         public int idDonor { get; set; }

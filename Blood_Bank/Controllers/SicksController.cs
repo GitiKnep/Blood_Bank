@@ -28,9 +28,9 @@ namespace Blood_Bank.Controllers
 
         // GET: api/<DonationsController>
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            var lst = _sicksService.GetAll();
+            var lst =await _sicksService.GetAllSicksAsync();
             var lstDto = new List<SicksDto>();
             foreach (var item in lst)
             {
@@ -41,9 +41,9 @@ namespace Blood_Bank.Controllers
 
         // GET api/<DonationsController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var sic1= _sicksService.Get(id);
+            var sic1= _sicksService.GetSickByIdAsync(id);
             if(sic1==null)
             {
                 return NotFound();
@@ -53,28 +53,36 @@ namespace Blood_Bank.Controllers
 
         // POST api/<DonationsController>
         [HttpPost]
-        public ActionResult Post([FromBody] SicksModel sic)
+        public async Task<ActionResult> Post([FromBody] SicksModel sic)
         {
             var sickPost=new Sicks {fNameSick=sic.fNameSick,lNameSick=sic.lNameSick,typeBloodSick=sic.typeBloodSick,statusSick=sic.statusSick,pelephoneSick=sic.pelephoneSick };
-            _sicksService.Post(sickPost);
+           await _sicksService.AddSickAsync(sickPost);
+            _mapper.Map(sic, sickPost);
             return Ok(_mapper.Map<SicksDto>(sickPost));
 
         }
 
         // PUT api/<DonationsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Sicks sic)
+        public async Task<ActionResult> Put(int id, [FromBody] Sicks sic)
         {
-            return Ok( _sicksService.Put(id, sic));
+            var sici = await _sicksService.GetSickByIdAsync(id);
+           if(sici is null)
+            {
+                return NotFound();
+            }
+           _mapper.Map(sici, sici);
+            await _sicksService.UpdateSickAsync(id, sic);
+            return Ok();
         }
 
         // DELETE api/<DonationsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task Delete(int id)
         {
 
-            _sicksService.Delete(id);
-            return NoContent();
+            await _sicksService.DeleteSickAsync(id);
+            
         }
     }
     }

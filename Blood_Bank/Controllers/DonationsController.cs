@@ -6,6 +6,7 @@ using Blood_Bank.Core.Services;
 using Blood_Bank.Models;
 using AutoMapper;
 using Blood_Bank.Core.DTOs;
+using Blood_Bank.Data;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Blood_Bank.Controllers
@@ -16,18 +17,21 @@ namespace Blood_Bank.Controllers
     {
         
         private readonly IDonationsService _donationsService;
+        private readonly DataContext _context;
+
         private readonly IMapper _mapper;
-        public DonationsController(IDonationsService donationsService, IMapper mapper)
+        public DonationsController(DataContext context,IDonationsService donationsService, IMapper mapper)
         {
             _mapper = mapper;
             _donationsService = donationsService;
+            _context = context;
         }
        
         // GET: api/<DonationsController>
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            var lst= _donationsService.GetAll();
+            var lst = await _donationsService.GetAllDonationsAsync();
             var lstDto=new List<DonationsDto>();
             foreach(var item in lst)
             {
@@ -38,9 +42,9 @@ namespace Blood_Bank.Controllers
 
         // GET api/<DonationsController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var donations = _donationsService.Get(id);
+            var donations = _donationsService.GetDonationByIdAsync(id);
             if(donations == null)
             {
                 return NotFound();
@@ -50,28 +54,39 @@ namespace Blood_Bank.Controllers
 
         // POST api/<DonationsController>
         [HttpPost]
-        public ActionResult Post([FromBody] DonationsModel dona)
+        public async Task<ActionResult> Post([FromBody] DonationsModel dona)
         {
+            var donor = _context.DonorsList.First(d => d.Id == dona.idDonor);
+            var sick = _context.SicksList.First(u => u.Id == dona.idSick);
             var donationPost = new Donations { idDonor = dona.idDonor, idSick = dona.idSick, statusDonation = dona.statusDonation };
-            _donationsService.Post(donationPost);
+            donationPost.Sick = sick;
+            donationPost.Donor=donor;
+           await _donationsService.AddDonationAsync(donationPost);
+            _mapper.Map(dona, donationPost);
             return Ok(_mapper.Map<DonationsDto>(donationPost) );
 
         }
 
         // PUT api/<DonationsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Donations dona)
+        public async Task<ActionResult> Put(int id, [FromBody] Donations dona)
         {
-            return Ok(_donationsService.Put(id,dona));
+            var donat=await _donationsService.GetDonationByIdAsync(id);
+            if(donat is null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(dona, donat);
+            await _donationsService.UpdateDonationAsync(id, dona);
+            return Ok();
         }
 
         // DELETE api/<DonationsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task Delete(int id)
         {
             
-           _donationsService.Delete(id);
-            return NoContent();
+          await _donationsService.DeleteDonationAsync(id);
         }
     }
 }

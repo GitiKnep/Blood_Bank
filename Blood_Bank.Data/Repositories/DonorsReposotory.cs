@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Blood_Bank.Data.Repositories
 {
@@ -16,28 +18,28 @@ namespace Blood_Bank.Data.Repositories
             _context = context;
         }
 
-        public List<Donors> GetAll()
+        public async Task<List<Donors>> GetAllDonorsAsync()
         {
-            return _context.DonorsList.ToList();
+            return await _context.DonorsList.ToListAsync();
 
         }
 
-        public Donors Get(int id)
+        public async Task<Donors> GetDonorByIdAsync(int id)
         {
-            return _context.DonorsList.Find(id);
+            return await _context.DonorsList.FindAsync(id);
 
         }
 
 
-        public Donors Post(Donors don)
+        public async Task AddDonorAsync(Donors don)
         {
             _context.DonorsList.Add(don);
-            _context.SaveChanges();
-            return don;
+            await _context.SaveChangesAsync();
+           
         }
-        public Donors Put(int id, Donors don)
+        public async Task UpdateDonorAsync(int id, Donors don)
         {
-            var don2 = Get(id);
+            var don2 = GetDonorByIdAsync(id).Result;
             if (don2 != null)
             {
                
@@ -46,16 +48,15 @@ namespace Blood_Bank.Data.Repositories
                 don2.statusDonor = don.statusDonor;
                 don2.pelephoneDonor = don.pelephoneDonor;
                 don2.typeBloodDonor = don.typeBloodDonor;
-                _context.SaveChanges();
-            }
-            return don2;
+                await _context.SaveChangesAsync();
+            } 
         }
 
-        public void Delete(int id)
+        public async Task DeleteDonorAsync(int id)
         {
-            var don1 = Get(id);
-            _context.DonorsList.Remove(don1);
-            _context.SaveChanges();
+            var don1 = GetDonorByIdAsync(id);
+            _context.DonorsList.Remove(don1.Result);
+           await _context.SaveChangesAsync();
 
         }
     }

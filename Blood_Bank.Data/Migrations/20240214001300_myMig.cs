@@ -4,7 +4,7 @@
 
 namespace Blood_Bank.Data.Migrations
 {
-    public partial class DBone : Migration
+    public partial class myMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace Blood_Bank.Data.Migrations
                 name: "DonorsList",
                 columns: table => new
                 {
-                    idDonor = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     fNameDonor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     lNameDonor = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -22,14 +22,14 @@ namespace Blood_Bank.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DonorsList", x => x.idDonor);
+                    table.PrimaryKey("PK_DonorsList", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SicksList",
                 columns: table => new
                 {
-                    idSick = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     fNameSick = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     lNameSick = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -39,47 +39,47 @@ namespace Blood_Bank.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SicksList", x => x.idSick);
+                    table.PrimaryKey("PK_SicksList", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "DonationsList",
                 columns: table => new
                 {
-                    idDonation = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     idSick = table.Column<int>(type: "int", nullable: false),
-                    SickidSick = table.Column<int>(type: "int", nullable: false),
+                    SickId = table.Column<int>(type: "int", nullable: false),
                     idDonor = table.Column<int>(type: "int", nullable: false),
-                    DonoridDonor = table.Column<int>(type: "int", nullable: false),
+                    DonorId = table.Column<int>(type: "int", nullable: false),
                     statusDonation = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DonationsList", x => x.idDonation);
+                    table.PrimaryKey("PK_DonationsList", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DonationsList_DonorsList_DonoridDonor",
-                        column: x => x.DonoridDonor,
+                        name: "FK_DonationsList_DonorsList_DonorId",
+                        column: x => x.DonorId,
                         principalTable: "DonorsList",
-                        principalColumn: "idDonor",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DonationsList_SicksList_SickidSick",
-                        column: x => x.SickidSick,
+                        name: "FK_DonationsList_SicksList_SickId",
+                        column: x => x.SickId,
                         principalTable: "SicksList",
-                        principalColumn: "idSick",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DonationsList_DonoridDonor",
+                name: "IX_DonationsList_DonorId",
                 table: "DonationsList",
-                column: "DonoridDonor");
+                column: "DonorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DonationsList_SickidSick",
+                name: "IX_DonationsList_SickId",
                 table: "DonationsList",
-                column: "SickidSick");
+                column: "SickId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

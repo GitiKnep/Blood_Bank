@@ -2,10 +2,8 @@
 
 namespace Blood_Bank.Core.Entities
 {
-    public class Donors
+    public class Donors:BaseModel
     {
-        [Key]
-        public int idDonor { get; set; }
         public string? fNameDonor { get; set; }
         public string? lNameDonor { get; set; }
         public string? typeBloodDonor { get; set; }
