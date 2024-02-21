@@ -7,7 +7,8 @@ using Blood_Bank.Service;
 using Blood_Bank.Core.Services;
 using System.Text.Json.Serialization;
 using Blood_Bank.Core;
-
+using Blood_Bank.Middlewares;
+using Blood_Bank.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ builder.Services.AddScoped<ISicksService, SicksService>();
 builder.Services.AddScoped<IDonationsRepositories, DonationsReposotory>();
 builder.Services.AddScoped<IDonorsRepositories, DonorsReposotory>();
 builder.Services.AddScoped<ISicksRepositories, SicksReposotory>();
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(typeof(MappingProfile), typeof(APIMappingProfile));
 
 
 var app = builder.Build();
@@ -43,6 +44,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseTrack();
+
 
 app.MapControllers();
 
